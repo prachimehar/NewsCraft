@@ -11,7 +11,6 @@ function TopHeadlines() {
     const [isLoading, setIsLoading] = useState(false);
 
     const pageSize = 6;
-    const API_KEY = 'your-api-key';  // Make sure to replace with actual API Key
 
     const handlePrev = () => {
         setPage(page - 1);
@@ -24,14 +23,13 @@ function TopHeadlines() {
     useEffect(() => {
         setIsLoading(true);
         const categoryParam = category ? `&category=${category}` : '';
-        fetch(`http://localhost:3000/top-headlines?language=en${categoryParam}&pageSize=${pageSize}&apiKey=${API_KEY}`)
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error('Failed to fetch');
-                }
+        
+        fetch(`http://localhost:3000/top-headlines?language=en${categoryParam}&pageSize=${pageSize}&page=${page}`)
+            .then(response => {
+                if (!response.ok) throw new Error('Failed to fetch');
                 return response.json();
             })
-            .then((myJson) => {
+            .then(myJson => {
                 if (myJson.success) {
                     setTotalResults(myJson.data.totalResults);
                     setData(myJson.data.articles);
@@ -39,12 +37,8 @@ function TopHeadlines() {
                     console.error(myJson.message || 'An error occurred');
                 }
             })
-            .catch((error) => {
-                console.error('Fetch error:', error);
-            })
-            .finally(() => {
-                setIsLoading(false);
-            });
+            .catch(error => console.error('Fetch error:', error))
+            .finally(() => setIsLoading(false));
     }, [page, category]);
 
     return (
