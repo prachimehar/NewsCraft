@@ -14,25 +14,26 @@ html, body {
     scroll-behavior: smooth;
 }
 
+
 .light-theme {
-    --background: url("https://tailwindcss.com/_next/static/media/hero@75.b2469a49.jpg");
+    --background:url("https://cdn.vectorstock.com/i/500p/84/65/abstract-white-monochrome-background-vector-32028465.jpg")no-repeat center center fixed;
     --primary: #F8FAFC;
     --secondary: #0F172A;
     --txt: #000;
-    --heading: #2dd9fe;
+    --heading: #1775d9;
     --btn-color: #fff;
     --btn-background: #5f99be;
     --search-background: #000;
-    --c: #2dd9fe;
-    --hover_bg_change: backdrop-filter:6px;
+    
+   
 }
 
 .dark-theme {
-    --background: url("https://tailwindcss.com/_next/static/media/hero-dark@90.dba36cdf.jpg");
+    --background:url("https://img.freepik.com/free-vector/gradient-abstract-wireframe-background_23-2149009903.jpg?t=st=1744099763~exp=1744103363~hmac=fcb14babefb13d784375452ef21643b5235fea6795eb55b2df85daa7822c7043&w=1380") no-repeat center center fixed;
     --primary: rgb(30,41,59);
     --secondary: #D5DDF0;
     --txt: #fff;
-    --heading: #6c82ed;
+    --heading: #4666FF;
     --btn-color: #000;
     --btn-background: #5f99be;
     --search-background: #18181b;
@@ -47,30 +48,54 @@ body {
 }
 
 .container {
+    padding-top: 55px;
     width: 100% !important;
 }
 
 nav {
-    height: 70px;
-    backdrop-filter: blur(4px);
-    border-bottom: 0.1px solid grey;
-    background-color: var(--primary);
-}
-nav a {
-    color: var(--txt);
-    transition: color 0.3s ease;
+    height: 55px;
+    backdrop-filter: none; 
+    background-color: var(--bg); 
+    border-bottom: 0.1px solid rgb(255, 249, 249);
+    transition: background-color 0.3s ease; /* Smooth transition */
+    
+    display: flex;
+    justify-content: space-between; 
+    align-items: center; 
+    
 }
 
-nav a:hover {
-    color: var(--heading); 
+nav ul {
+    display: flex;
+    gap: 20px; /* Adds spacing between list items */
+    min-width: 378px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
+
+nav ul li {
+    display: inline-block;
+    padding: 0 10px;
+    color: var(--txt);
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: inherit;
+    font-weight: 600;
+    padding: 5px 0;
+}
+
+nav ul li a:hover {
+    border-bottom: 2px solid var(--heading);
+}
+
 .heading {
     color: var(--heading);
 }
 
-nav ul {
-    min-width: 378px;
-}
 
 .dropdown-li {
     position: relative;
@@ -124,12 +149,9 @@ ul li ul li {
     margin-bottom: 20px;
     border-style: none;
 }
-
-ul li ul li a:hover {
-    padding-left: 10px;
-    border-left: 2px solid #3ca0e7;
-    transition: all 0.3s ease;
-}
+.text-black {
+    color: #000 !important;
+  }
 
 .flags {
     height: 30px;
@@ -173,7 +195,7 @@ ul li ul li a:hover {
 }
 
 .checkbox-label {
-    background-color: #111;
+    background-color: #6c6a6a;
     width: 50px;
     height: 26px;
     border-radius: 50px;
@@ -239,17 +261,17 @@ ul li ul li a:hover {
     overflow: hidden;
     border-radius: 15px;
     box-shadow: 
-        0 0 10px rgba(0, 0, 0, 0.5),
-        0 0 10px rgba(0, 0, 0, 0.5),
-        0 0 10px rgba(0, 0, 0, 0.5),
-        0 0 10px rgba(0, 0, 0, 0.5);
+        0 0 10px rgba(56, 56, 56, 0.5),
+        0 0 10px rgba(56, 56, 56, 0.5),
+        0 0 10px rgba(56, 56, 56, 0.5),
+        0 0 10px rgba(56, 56, 56, 0.5);
 }
 
 .everything-card:hover {
     transform: translateY(-2px);
     transition: transform 0.2s ease-in-out;
     background: var(--primary);
-    box-shadow: 0 0 11px grey; 
+    box-shadow: 0 0 11px rgb(145, 145, 145); 
 }
 
 .everything-card-img {
@@ -282,7 +304,7 @@ footer {
     display: grid;
     color: var(--heading);
     background: radial-gradient(farthest-side, currentColor calc(100% - 6px), #0000 calc(100% - 5px) 0);
-    mask: radial-gradient(farthest-side, rgba(0, 0, 0, 0) calc(100% - 13px), rgba(0, 0, 0, 1) calc(100% - 12px));    
+    mask: radial-gradient(farthest-side, rgba(0, 0, 0, 0) calc(100% - 13px), rgba(0, 0, 0, 1) calc(100% - 12px));
     -webkit-mask: radial-gradient(farthest-side, #0000 calc(100% - 13px), #000 calc(100% - 12px));
     border-radius: 50%;
     animation: l19 2s infinite linear;
@@ -302,6 +324,8 @@ footer {
 .loader::after {
     transform: rotate(45deg);
 }
+
+
 
 @keyframes l19 { 
     100% { transform: rotate(1turn) }
@@ -362,7 +386,7 @@ footer {
 
 @media (max-width: 480px) {
     .everything-card {
-        width: 90%;
+        width: 100%;
     }
 }
 
