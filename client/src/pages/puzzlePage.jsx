@@ -48,7 +48,7 @@ const puzzleGames = [
   {
     title: "Minesweeper",
     description: "Uncover safe tiles and avoid the mines!",
-    image: minesweeperImg, 
+    image:  minesweeperImg, 
     link: "https://cardgames.io/minesweeper/",
   },
   {
