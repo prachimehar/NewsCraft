@@ -5,10 +5,11 @@ import wordSearchImg from "/src/assets/word-search.jpg";
 import chessImg from "/src/assets/chess.jpg";
 import memoryImg from "/src/assets/MemoryGame.jpg";
 import jigsawImg from "/src/assets/JigsawPuzzle.jpg";
+import minesweeperImg from "/src/assets/Minesweeper.jpg";
 import slidingPuzzleImg from "/src/assets/SlidingPuzzle.jpg";
 import crosswordImg from "/src/assets/Crossword.jpg";
 import scrabbleImg from "/src/assets/Scrabble.jpg";
-import hangmanImg from "/src/assets/Hangman.jpg";
+import hangmanImg from "/src/assets/Hangman.jpg";z
 import reversiImg from "/src/assets/Reversi.jpg";
 import WordleImg from "/src/assets/Wordle.png";
 
@@ -37,6 +38,12 @@ const puzzleGames = [
     description: "Match pairs of cards to test your memory.",
     image: memoryImg, 
     link: "https://www.helpfulgames.com/subjects/brain-training/memory.html",
+  },
+  {
+    title: "Minesweeper",
+    description: "Uncover safe tiles and avoid the mines!",
+    image: minesweeperImg, 
+    link: "https://cardgames.io/minesweeper/",
   },
   {
     title: "Jigsaw Puzzle",
