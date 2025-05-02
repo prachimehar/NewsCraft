@@ -5,7 +5,7 @@ import wordSearchImg from "/src/assets/word-search.jpg";
 import chessImg from "/src/assets/chess.jpg";
 import memoryImg from "/src/assets/MemoryGame.jpg";
 import jigsawImg from "/src/assets/JigsawPuzzle.jpg";
-import minesweeperImg from "/assets/Minesweeper.jpg";
+import minesweeperImg from "/src/assets/Minesweeper.jpg";
 import slidingPuzzleImg from "/src/assets/SlidingPuzzle.jpg";
 import crosswordImg from "/src/assets/Crossword.jpg";
 import scrabbleImg from "/src/assets/Scrabble.jpg";
