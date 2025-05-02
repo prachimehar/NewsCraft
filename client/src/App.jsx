@@ -3,7 +3,7 @@ import "./App.css";
 import Header from "./components/Header";
 import AllNews from "./components/AllNews";
 import TopHeadlines from "./components/TopHeadlines";
-import PuzzlePage from "./pages/puzzlePage";
+import PuzzlePage from "./pages/PuzzlePage"; 
 import NotesPage from "./pages/NotesPage";
 import Home from "./pages/Home";
 import CountryNews from "./components/CountryNews";
