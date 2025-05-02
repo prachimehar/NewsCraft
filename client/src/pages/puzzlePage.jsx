@@ -5,7 +5,6 @@ import wordSearchImg from "/src/assets/word-search.jpg";
 import chessImg from "/src/assets/chess.jpg";
 import memoryImg from "/src/assets/MemoryGame.jpg";
 import jigsawImg from "/src/assets/JigsawPuzzle.jpg";
-import minesweeperImg from "/src/assets/Minesweeper.jpg";
 import slidingPuzzleImg from "/src/assets/SlidingPuzzle.jpg";
 import crosswordImg from "/src/assets/Crossword.jpg";
 import scrabbleImg from "/src/assets/Scrabble.jpg";
@@ -44,12 +43,6 @@ const puzzleGames = [
     description: "Rearrange pieces to complete the picture.",
     image: jigsawImg, 
     link: "https://www.jigsawplanet.com/",
-  },
-  {
-    title: "Minesweeper",
-    description: "Uncover safe tiles and avoid the mines!",
-    image: minesweeperImg, 
-    link: "https://cardgames.io/minesweeper/",
   },
   {
     title: "Sliding Puzzle",
