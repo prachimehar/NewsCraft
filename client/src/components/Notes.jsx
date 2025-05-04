@@ -103,12 +103,11 @@ const Notes = () => {
         <div className="flex justify-center mt-4">
           <button
             onClick={saveNote}
-            className={px-6 py-2 rounded-lg font-semibold shadow-lg transition-all duration-300 transform ${
-              editingId
-                ? "bg-[#FF3B30] hover:bg-[#D32F2F] hover:shadow-blue-500/50"
-                : "bg-[#FF3B30] hover:bg-[#D32F2F] hover:shadow-red-500/50"
-            } text-white hover:scale-105}
-          >
+            className={`px-6 py-2 rounded-lg font-semibold shadow-lg transition-all duration-300 transform ${
+            editingId
+            ? "bg-[#FF3B30] hover:bg-[#D32F2F] hover:shadow-blue-500/50"
+            : "bg-[#FF3B30] hover:bg-[#D32F2F] hover:shadow-red-500/50"
+            } text-white hover:scale-105`}>
             {editingId ? "✏️ Update Note" : "➕ Add Note"}
           </button>
         </div>
