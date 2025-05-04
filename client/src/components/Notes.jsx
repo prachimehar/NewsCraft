@@ -1,8 +1,18 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-// Define the base URL for your deployed backend
-const apiUrl = "https://newscraft.onrender.com/notes";
+// Function to generate random pastel colors
+const getRandomColor = () => {
+  const colors = [
+    "#FFDDC1",
+    "#FFABAB",
+    "#FFC3A0",
+    "#D5AAFF",
+    "#85E3FF",
+    "#B9FBC0",
+  ];
+  return colors[Math.floor(Math.random() * colors.length)];
+};
 
 const Notes = () => {
   const [notes, setNotes] = useState([]);
@@ -11,15 +21,15 @@ const Notes = () => {
   const [editingId, setEditingId] = useState(null);
   const [error, setError] = useState(null);
 
-  // Fetch notes from the backend
+  // Fetch notes
   useEffect(() => {
     axios
-      .get(apiUrl)
+      .get("http://localhost:5000/notes")
       .then((res) => setNotes(res.data.data))
       .catch((err) => setError("Failed to fetch notes. Try again later."));
   }, []);
 
-  // Add or update a note
+  // Add or Update Note
   const saveNote = async () => {
     if (!title || !content) {
       setError("Title and content are required!");
@@ -29,16 +39,15 @@ const Notes = () => {
     try {
       if (editingId) {
         // Update existing note
-        await axios.put(`${apiUrl}/${editingId}`, { title, content });
-        setNotes(
-          notes.map((note) =>
-            note._id === editingId ? { ...note, title, content } : note
-          )
-        );
+        await axios.put(http://localhost:5000/notes/${editingId}, {
+          title,
+          content,
+        });
+        setNotes(notes.map((note) => (note._id === editingId ? { ...note, title, content } : note)));
         setEditingId(null);
       } else {
         // Add new note
-        const res = await axios.post(apiUrl, { title, content });
+        const res = await axios.post("http://localhost:5000/notes", { title, content });
         setNotes([...notes, res.data.data]);
       }
       setTitle("");
@@ -49,17 +58,17 @@ const Notes = () => {
     }
   };
 
-  // Delete a note
+  // Delete note
   const deleteNote = async (id) => {
     try {
-      await axios.delete(`${apiUrl}/${id}`);
+      await axios.delete(http://localhost:5000/notes/${id});
       setNotes(notes.filter((note) => note._id !== id));
     } catch (err) {
       setError("Error deleting note. Please try again.");
     }
   };
 
-  // Edit a note
+  // Edit note - Fill form with existing data
   const editNote = (note) => {
     setTitle(note.title);
     setContent(note.content);
@@ -94,11 +103,11 @@ const Notes = () => {
         <div className="flex justify-center mt-4">
           <button
             onClick={saveNote}
-            className={`px-6 py-2 rounded-lg font-semibold shadow-lg transition-all duration-300 transform ${
+            className={px-6 py-2 rounded-lg font-semibold shadow-lg transition-all duration-300 transform ${
               editingId
                 ? "bg-[#FF3B30] hover:bg-[#D32F2F] hover:shadow-blue-500/50"
                 : "bg-[#FF3B30] hover:bg-[#D32F2F] hover:shadow-red-500/50"
-            } text-white hover:scale-105`}
+            } text-white hover:scale-105}
           >
             {editingId ? "✏️ Update Note" : "➕ Add Note"}
           </button>
@@ -147,4 +156,3 @@ const Notes = () => {
 };
 
 export default Notes;
-
