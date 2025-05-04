@@ -39,15 +39,22 @@ const Notes = () => {
     try {
       if (editingId) {
         // Update existing note
-        await axios.put(http://localhost:5000/notes/${editingId}, {
+        await axios.put(`http://localhost:5000/notes/${editingId}`, {
           title,
           content,
         });
-        setNotes(notes.map((note) => (note._id === editingId ? { ...note, title, content } : note)));
+        setNotes(
+          notes.map((note) =>
+            note._id === editingId ? { ...note, title, content } : note
+          )
+        );
         setEditingId(null);
       } else {
         // Add new note
-        const res = await axios.post("http://localhost:5000/notes", { title, content });
+        const res = await axios.post("http://localhost:5000/notes", {
+          title,
+          content,
+        });
         setNotes([...notes, res.data.data]);
       }
       setTitle("");
@@ -61,7 +68,7 @@ const Notes = () => {
   // Delete note
   const deleteNote = async (id) => {
     try {
-      await axios.delete(http://localhost:5000/notes/${id});
+      await axios.delete(`http://localhost:5000/notes/${id}`);
       setNotes(notes.filter((note) => note._id !== id));
     } catch (err) {
       setError("Error deleting note. Please try again.");
@@ -104,10 +111,11 @@ const Notes = () => {
           <button
             onClick={saveNote}
             className={`px-6 py-2 rounded-lg font-semibold shadow-lg transition-all duration-300 transform ${
-            editingId
-            ? "bg-[#FF3B30] hover:bg-[#D32F2F] hover:shadow-blue-500/50"
-            : "bg-[#FF3B30] hover:bg-[#D32F2F] hover:shadow-red-500/50"
-            } text-white hover:scale-105`}>
+              editingId
+                ? "bg-[#FF3B30] hover:bg-[#D32F2F] hover:shadow-blue-500/50"
+                : "bg-[#FF3B30] hover:bg-[#D32F2F] hover:shadow-red-500/50"
+            } text-white hover:scale-105`}
+          >
             {editingId ? "✏️ Update Note" : "➕ Add Note"}
           </button>
         </div>
