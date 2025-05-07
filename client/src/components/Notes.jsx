@@ -1,14 +1,15 @@
-
 import { useState, useEffect } from "react";
 import axios from "axios";
-
-const API_BASE_URL = "https://newscraft.onrender.com";
 
 // Function to generate random pastel colors
 const getRandomColor = () => {
   const colors = [
-    "#FFDDC1", "#FFABAB", "#FFC3A0",
-    "#D5AAFF", "#85E3FF", "#B9FBC0",
+    "#FFDDC1",
+    "#FFABAB",
+    "#FFC3A0",
+    "#D5AAFF",
+    "#85E3FF",
+    "#B9FBC0",
   ];
   return colors[Math.floor(Math.random() * colors.length)];
 };
@@ -20,12 +21,15 @@ const Notes = () => {
   const [editingId, setEditingId] = useState(null);
   const [error, setError] = useState(null);
 
+  const API_BASE_URL = "https://newscraft.onrender.com";  // Use your API base URL here
+
   // Fetch notes
   useEffect(() => {
     axios
       .get(`${API_BASE_URL}/notes`)
       .then((res) => {
-        setNotes(res.data.data);
+        console.log(res.data); // See actual structure
+        setNotes(res.data.data); // Adjust based on actual data
       })
       .catch((err) => {
         console.error(err);
@@ -43,7 +47,7 @@ const Notes = () => {
     try {
       if (editingId) {
         // Update existing note
-       await axios.put(`${API_BASE_URL}/notes/${editingId}`, {
+        await axios.put(`${API_BASE_URL}/notes/${editingId}`, {
           title,
           content,
         });
@@ -76,7 +80,6 @@ const Notes = () => {
       await axios.delete(`${API_BASE_URL}/notes/${id}`);
       setNotes(notes.filter((note) => note._id !== id));
     } catch (err) {
-      console.error(err);
       setError("Error deleting note. Please try again.");
     }
   };
