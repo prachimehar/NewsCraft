@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-// Function to generate random pastel colors
+const API_BASE_URL = "https://newscraft.onrender.com";
+
 const getRandomColor = () => {
   const colors = [
     "#FFDDC1",
@@ -21,15 +22,20 @@ const Notes = () => {
   const [editingId, setEditingId] = useState(null);
   const [error, setError] = useState(null);
 
-  // Fetch notes
   useEffect(() => {
     axios
-      .get("http://localhost:5000/notes")
-      .then((res) => setNotes(res.data.data))
-      .catch((err) => setError("Failed to fetch notes. Try again later."));
+      .get(`${API_BASE_URL}/notes`)
+      .then((res) => {
+        console.log(res.data); // Debug: see response structure
+        setNotes(res.data.data); // Adjust this based on actual backend response
+      })
+      .catch((err) => {
+        console.error(err);
+        setError("Failed to fetch notes. Try again later.");
+      });
   }, []);
 
-  // Add or Update Note
+
   const saveNote = async () => {
     if (!title || !content) {
       setError("Title and content are required!");
@@ -39,7 +45,7 @@ const Notes = () => {
     try {
       if (editingId) {
         // Update existing note
-        await axios.put(`http://localhost:5000/notes/${editingId}`, {
+        await axios.put(`${API_BASE_URL}/notes/${editingId}`, {
           title,
           content,
         });
@@ -50,8 +56,7 @@ const Notes = () => {
         );
         setEditingId(null);
       } else {
-        // Add new note
-        const res = await axios.post("http://localhost:5000/notes", {
+        const res = await axios.post(`${API_BASE_URL}/notes`, {
           title,
           content,
         });
@@ -64,18 +69,16 @@ const Notes = () => {
       setError("Error saving note. Please try again.");
     }
   };
-
-  // Delete note
+  
   const deleteNote = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/notes/${id}`);
+      await axios.delete(`${API_BASE_URL}/notes/${id}`);
       setNotes(notes.filter((note) => note._id !== id));
     } catch (err) {
       setError("Error deleting note. Please try again.");
     }
   };
 
-  // Edit note - Fill form with existing data
   const editNote = (note) => {
     setTitle(note.title);
     setContent(note.content);
@@ -86,14 +89,12 @@ const Notes = () => {
     <div className="max-w-2xl mx-auto p-6 bg-gray-100 min-h-screen">
       <h2 className="text-3xl mt-5 font-bold text-center mb-6">📝 Notes</h2>
 
-      {/* Error Message */}
       {error && (
         <div className="text-center bg-red-500 text-white p-3 rounded-lg mb-4">
           {error}
         </div>
       )}
 
-      {/* Form */}
       <div className="bg-white bg-[#FFA07A] text-black p-4 rounded-lg shadow-md">
         <input
           value={title}
@@ -121,7 +122,6 @@ const Notes = () => {
         </div>
       </div>
 
-      {/* Notes List */}
       <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
         {notes.length === 0 ? (
           <p className="text-gray-500 text-center col-span-3">
