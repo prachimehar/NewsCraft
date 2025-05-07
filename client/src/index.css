@@ -9,6 +9,7 @@
     color: var(--txt);
 }
 
+
 html, body {
     overflow-x: hidden;
     scroll-behavior: smooth;
