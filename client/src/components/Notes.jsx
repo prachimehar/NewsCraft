@@ -43,7 +43,7 @@ const Notes = () => {
     try {
       if (editingId) {
         // Update existing note
-        await axios.put(`${API_BASE_URL}/notes/${editingId}`, {
+       await axios.put(`${API_BASE_URL}/notes/${editingId}`, {
           title,
           content,
         });
