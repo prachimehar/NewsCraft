@@ -1,4 +1,4 @@
-require("dotenv").config();
+  require("dotenv").config();
 const express = require("express");
 const axios = require("axios");
 const cors = require("cors");
@@ -76,7 +76,7 @@ app.get("/country/:iso", async (req, res) => {
 
 // 📝 Notes API Routes
 // 🔹 Get all notes
-app.get("/notes", async (req, res) => {
+app.get("/api/notes", async (req, res) => {
   try {
     const notes = await Note.find();
     res.json({ success: true, data: notes });
@@ -86,7 +86,7 @@ app.get("/notes", async (req, res) => {
 });
 
 // ➕ Add a new note
-app.post("/notes", async (req, res) => {
+app.post("/api/notes", async (req, res) => {
   try {
     const { title, content } = req.body;
     const newNote = new Note({ title, content });
@@ -98,7 +98,7 @@ app.post("/notes", async (req, res) => {
 });
 
 // ❌ Delete a note
-app.delete("/notes/:id", async (req, res) => {
+app.delete("/api/notes/:id", async (req, res) => {
   try {
     await Note.findByIdAndDelete(req.params.id);
     res.json({ success: true, message: "Note deleted successfully" });
@@ -108,7 +108,7 @@ app.delete("/notes/:id", async (req, res) => {
 });
 
 // ✏️ Update (Edit) a Note
-app.put("/notes/:id", async (req, res) => {
+app.put("/api/notes/:id", async (req, res) => {
   try {
     const { title, content } = req.body;
     const updatedNote = await Note.findByIdAndUpdate(
