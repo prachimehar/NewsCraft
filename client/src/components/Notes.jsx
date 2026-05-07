@@ -26,7 +26,7 @@ const Notes = () => {
   // Fetch notes
   useEffect(() => {
     axios
-      .get(`${API_BASE_URL}/notes`)
+      .get(`${API_BASE_URL}/api/notes`)
       .then((res) => {
         console.log(res.data); // See actual structure
         setNotes(res.data.data); // Adjust based on actual data
@@ -47,7 +47,7 @@ const Notes = () => {
     try {
       if (editingId) {
         // Update existing note
-        await axios.put(`${API_BASE_URL}/notes/${editingId}`, {
+        await axios.put(`${API_BASE_URL}/api/notes/${editingId}`, {
           title,
           content,
         });
@@ -59,7 +59,7 @@ const Notes = () => {
         setEditingId(null);
       } else {
         // Add new note
-        const res = await axios.post(`${API_BASE_URL}/notes`, {
+        const res = await axios.post(`${API_BASE_URL}/api/notes`, {
           title,
           content,
         });
@@ -77,7 +77,7 @@ const Notes = () => {
   // Delete note
   const deleteNote = async (id) => {
     try {
-      await axios.delete(`${API_BASE_URL}/notes/${id}`);
+      await axios.delete(`${API_BASE_URL}/api/notes/${id}`);
       setNotes(notes.filter((note) => note._id !== id));
     } catch (err) {
       setError("Error deleting note. Please try again.");
