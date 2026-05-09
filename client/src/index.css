@@ -391,37 +391,32 @@ iframe {
     }
 
     nav ul {
-        position: fixed;
+       position: fixed;
         top: 55px;
-        left: -100%;
+        left: 0;
+
         width: 100%;
         height: calc(100vh - 55px);
 
         display: flex;
         flex-direction: column;
-        align-items: flex-start;
         gap: 20px;
-
-        background-color: var(--primary);
 
         padding: 30px 20px;
         margin: 0;
 
-        list-style: none;
+        background: var(--primary);
+
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
 
         overflow-y: auto;
-        overflow-x: hidden;
-
-        transition: left 0.3s ease;
 
         z-index: 999;
-
-        min-width: 0;
-        max-width: 100%;
     }
 
     nav ul.active {
-        left: 0;
+        transform: translateX(0);
     }
 
     nav ul li {
