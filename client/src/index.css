@@ -140,10 +140,16 @@ ul li ul {
 }
 
 .dropdown {
-    min-height: 10vh;
-    height: 50vh;
-    overflow: auto;
-    top: 30px;
+   position: absolute;
+    top: 100%;
+    left: 0;
+
+    min-height: unset;
+    height: auto;
+    max-height: 50vh;
+
+    overflow-y: auto;
+    z-index: 1000;
 }
 
 ul li ul li {
@@ -397,6 +403,7 @@ iframe {
     position: fixed;
     top: 55px;
     left: 0;
+    right: 0;
 
     width: 100vw;
     height: calc(100dvh - 55px);
@@ -410,11 +417,12 @@ iframe {
 
     background: var(--primary);
 
-    transform: translateX(-100%);
+    transform: translateX(-100vw);
     transition: transform 0.3s ease;
 
     overflow-y: auto;
     box-sizing: border-box;
+    
 
     z-index: 999;
 }
