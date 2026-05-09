@@ -362,22 +362,21 @@ footer {
     }
 
     nav ul {
-        display: none;
+        display: flex;
         flex-direction: column;
         position: fixed;
-        top: 70px;
+        top: 55px;
         left: -100%;
         width: 100%;
-        height: calc(100vh - 70px);
+        height: calc(100vh - 55px);
         background-color: var(--primary);
-        z-index: 1;
-        padding: 25% 10%;
-        transition: 0.3s;
+        z-index: 999;
+        padding: 40px 20px;
+        transition: left 0.3s ease;
     }
 
     nav ul.active {
         left: 0;
-        display: flex;
     }
 
     .everything-card {
