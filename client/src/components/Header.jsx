@@ -4,23 +4,29 @@ import countries from "./countries";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleArrowDown } from "@fortawesome/free-solid-svg-icons";
 import newsIcon from "../assets/newspapers.png"; // Adjusted path if needed
+import { useLocation } from "react-router-dom";
 
 function Header() {
   const [active, setActive] = useState(false);
   const [showCountryDropdown, setShowCountryDropdown] = useState(false);
   const [showCategoryDropdown, setShowCategoryDropdown] = useState(false);
+  const location = useLocation();
 
-  // Get theme from localStorage or default to dark-theme
   const [theme, setTheme] = useState(
     localStorage.getItem("theme") || "dark-theme"
   );
 
   useEffect(() => {
-    document.body.className = theme; // Apply theme class
-    localStorage.setItem("theme", theme); // Save preference
+    document.body.className = theme; 
+    localStorage.setItem("theme", theme); 
   }, [theme]);
 
-  // Toggle between light and dark theme
+  useEffect(() => {
+  setActive(false);
+  setShowCategoryDropdown(false);
+  setShowCountryDropdown(false);
+}, [location.pathname]);
+
   function toggleTheme() {
     setTheme(theme === "light-theme" ? "dark-theme" : "light-theme");
   }

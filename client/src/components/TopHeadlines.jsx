@@ -12,11 +12,11 @@ function TopHeadlines() {
   const [error, setError] = useState(null);
 
   function handlePrev() {
-    setPage(page - 1);
+    setPage(prev => prev + 1);
   }
 
   function handleNext() {
-    setPage(page + 1);
+    setPage(prev => prev - 1);
   }
 
   let pageSize = 6;
