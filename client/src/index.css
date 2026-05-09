@@ -366,13 +366,15 @@ footer {
         flex-direction: column;
         position: fixed;
         top: 55px;
-        left: -100%;
-        width: 100%;
+        left: -100vw;
+        width: 100vw;
         height: calc(100vh - 55px);
         background-color: var(--primary);
         z-index: 999;
         padding: 40px 20px;
         transition: left 0.3s ease;
+        overflow-y: auto;
+        min-width: unset;
     }
 
     nav ul.active {
