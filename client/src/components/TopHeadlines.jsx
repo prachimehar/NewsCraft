@@ -12,41 +12,54 @@ function TopHeadlines() {
   const [error, setError] = useState(null);
 
   function handlePrev() {
-    setPage(prev => prev + 1);
-  }
+  setPage(prev => prev - 1);
+}
 
-  function handleNext() {
-    setPage(prev => prev - 1);
-  }
+function handleNext() {
+  setPage(prev => prev + 1);
+}
 
   let pageSize = 6;
 
   useEffect(() => {
-    setIsLoading(true);
-    setError(null);
-    const categoryParam = params.category ? `&category=${params.category}` : "";
-    fetch(`https://news-aggregator-dusky.vercel.app/top-headlines?language=en${categoryParam}&page=${page}&pageSize=${pageSize}`)
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
+    setPage(1);
+  }, [params.category]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setIsLoading(true);
+        setError(null);
+
+        const categoryParam = params.category
+          ? `&category=${params.category}`
+          : "";
+
+        const response = await fetch(
+          `https://news-aggregator-dusky.vercel.app/top-headlines?language=en${categoryParam}&page=${page}&pageSize=${pageSize}`
+        );
+
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
         }
-        throw new Error('Network response was not ok');
-      })
-      .then((json) => {
+
+        const json = await response.json();
+
         if (json.success) {
-          setTotalResults(json.data.totalResults);
-          setData(json.data.articles);
+          setTotalResults(json.data.totalResults || 0);
+          setData(json.data.articles || []);
         } else {
-          setError(json.message || 'An error occurred');
+          setError(json.message || "An error occurred");
         }
-      })
-      .catch((error) => {
-        console.error('Fetch error:', error);
-        setError('Failed to fetch news. Please try again later.');
-      })
-      .finally(() => {
+      } catch (err) {
+        console.error(err);
+        setError("Failed to fetch news. Please try again later.");
+      } finally {
         setIsLoading(false);
-      });
+      }
+    };
+
+    fetchData();
   }, [page, params.category]);
 
   return (
