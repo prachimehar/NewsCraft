@@ -46,6 +46,8 @@ body {
     background-position: center;
     min-height: 100vh;
     margin: 0;
+    position: relative;
+    
 }
 
 .container {
@@ -410,12 +412,12 @@ iframe {
 
     background: var(--primary);
 
-    transform: translateX(-100%);
+    transform: translateX(-100vw);
     transition: transform 0.3s ease;
 
     overflow-y: auto;
-    box-sizing: border-box;
 
+    box-sizing: border-box;
     z-index: 999;
 }
 
