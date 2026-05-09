@@ -49,11 +49,7 @@ function Header() {
           </Link>
         </h3>
 
-        <ul
-          className={`nav-ul flex items-center gap-11 md:gap-14 xs:gap-12 lg:basis-3/6 md:basis-4/6 md:justify-end ml-10 ${
-            active ? "active" : ""
-          }`}
-        >
+        <ul className={`nav-ul ${active ? "active" : ""}`}>
           <li>
             <Link
               className="no-underline font-semibold text-white whitespace-nowrap"

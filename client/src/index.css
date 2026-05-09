@@ -70,11 +70,12 @@ nav {
 
 nav ul {
     display: flex;
-    gap: 20px; /* Adds spacing between list items */
+    gap: 20px; 
     min-width: 378px;
     list-style: none;
     padding: 0;
     margin: 0;
+    
 }
 
 nav ul li {
@@ -396,11 +397,8 @@ iframe {
     position: fixed;
     top: 55px;
     left: 0;
-    right: 0;
 
     width: 100vw;
-    max-width: 100vw;
-
     height: calc(100dvh - 55px);
 
     display: flex;
@@ -412,12 +410,12 @@ iframe {
 
     background: var(--primary);
 
-    transform: translateX(-100vw);
+    transform: translateX(-100%);
     transition: transform 0.3s ease;
 
     overflow-y: auto;
-
     box-sizing: border-box;
+
     z-index: 999;
 }
 
