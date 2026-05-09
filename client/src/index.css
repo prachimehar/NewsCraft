@@ -139,17 +139,16 @@ ul li ul {
     transform: rotate(-180deg);
 }
 
+.dropdown-li {
+    position: relative;
+    z-index: 10000;
+}
+
 .dropdown {
-   position: absolute;
+    position: absolute;
     top: 100%;
     left: 0;
-
-    min-height: unset;
-    height: auto;
-    max-height: 50vh;
-
-    overflow-y: auto;
-    z-index: 1000;
+    z-index: 10001;
 }
 
 ul li ul li {
@@ -403,13 +402,13 @@ iframe {
     position: fixed;
     top: 55px;
     left: 0;
-    right: 0;
 
     width: 100vw;
     height: calc(100dvh - 55px);
 
     display: flex;
     flex-direction: column;
+
     gap: 20px;
 
     padding: 30px 20px;
@@ -421,9 +420,9 @@ iframe {
     transition: transform 0.3s ease;
 
     overflow-y: auto;
-    box-sizing: border-box;
-    
+    overflow-x: hidden;
 
+    box-sizing: border-box;
     z-index: 999;
 }
 
