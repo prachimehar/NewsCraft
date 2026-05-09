@@ -367,7 +367,7 @@ iframe {
     }
 }
 
-@media (max-width: 689px) {
+@media (max-width: 400px) {
 
     nav {
         width: 100%;
