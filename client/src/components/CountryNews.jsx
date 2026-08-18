@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import EverythingCard from "./EverythingCard";
 import Loader from "./Loader";
+import { fetchNews } from "../newsApi";
 
 function CountryNews() {
   const params = useParams();
@@ -24,15 +25,7 @@ function CountryNews() {
   useEffect(() => {
     setIsLoading(true);
     setError(null);
-    fetch(
-      `https://news-aggregator-dusky.vercel.app/country/${params.iso}?page=${page}&pageSize=${pageSize}`
-    )
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
-        throw new Error("Network response was not ok");
-      })
+    fetchNews(`/api/news?country=${params.iso}&page=${page}&pageSize=${pageSize}`)
       .then((myJson) => {
         if (myJson.success) {
           setTotalResults(myJson.data.totalResults);
@@ -43,7 +36,7 @@ function CountryNews() {
       })
       .catch((error) => {
         console.error("Fetch error:", error);
-        setError("Failed to fetch news. Please try again later.");
+        setError(error.message || "Failed to fetch news. Please try again later.");
       })
       .finally(() => {
         setIsLoading(false);
@@ -61,11 +54,13 @@ function CountryNews() {
                   key={`everything-${index}`}
                   title={element.title}
                   description={element.description}
-                  imgUrl={element.urlToImage}
+                  imgUrl={element.imageUrl}
                   publishedAt={element.publishedAt}
                   url={element.url}
                   author={element.author}
-                  source={element.source.name}
+                  source={element.sourceName}
+                  country={element.country}
+                  category={element.category}
                 />
             ))
           ) : (

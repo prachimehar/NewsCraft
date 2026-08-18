@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import API_BASE_URL from "../api";
 
 // Function to generate random pastel colors
 const getRandomColor = () => {
@@ -20,8 +21,6 @@ const Notes = () => {
   const [content, setContent] = useState("");
   const [editingId, setEditingId] = useState(null);
   const [error, setError] = useState(null);
-
-  const API_BASE_URL = "https://newscraft.onrender.com";  // Use your API base URL here
 
   // Fetch notes
   useEffect(() => {

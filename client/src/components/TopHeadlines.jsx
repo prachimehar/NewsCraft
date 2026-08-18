@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from 'react-router-dom'
 import EverythingCard from './EverythingCard'
 import Loader from "./Loader";
+import { fetchNews } from "../newsApi";
 
 function TopHeadlines() {
   const params = useParams();
@@ -25,13 +26,7 @@ function TopHeadlines() {
     setIsLoading(true);
     setError(null);
     const categoryParam = params.category ? `&category=${params.category}` : "";
-    fetch(`https://news-aggregator-dusky.vercel.app/top-headlines?language=en${categoryParam}&page=${page}&pageSize=${pageSize}`)
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
-        throw new Error('Network response was not ok');
-      })
+    fetchNews(`/api/news?country=in${categoryParam}&page=${page}&pageSize=${pageSize}`)
       .then((json) => {
         if (json.success) {
           setTotalResults(json.data.totalResults);
@@ -42,7 +37,7 @@ function TopHeadlines() {
       })
       .catch((error) => {
         console.error('Fetch error:', error);
-        setError('Failed to fetch news. Please try again later.');
+        setError(error.message || 'Failed to fetch news. Please try again later.');
       })
       .finally(() => {
         setIsLoading(false);
@@ -60,11 +55,13 @@ function TopHeadlines() {
                 key={index}
                 title={element.title}
                 description={element.description}
-                imgUrl={element.urlToImage}
+                imgUrl={element.imageUrl}
                 publishedAt={element.publishedAt}
                 url={element.url}
                 author={element.author}
-                source={element.source.name}
+                source={element.sourceName}
+                country={element.country}
+                category={element.category}
               />
             ))
           ) : (

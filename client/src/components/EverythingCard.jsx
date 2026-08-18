@@ -1,6 +1,8 @@
 import React from "react";
 
 function Card(props) {
+  const metadata = [props.country, props.category].filter(Boolean).join(" | ");
+
   return (
     <div className=" everything-card mt-10">
       <div className="everything-card flex flex-wrap p-5 gap-1 mb-1">
@@ -21,13 +23,19 @@ function Card(props) {
               target="_blank"
               className="link underline break-words"
             >
-              {props.source.substring(0, 70)}
+              {(props.source || "Unknown").substring(0, 70)}
             </a>
           </div>
           <div className="origin flex flex-col">
+            {metadata && (
+              <p className="origin-item">
+                <span className="font-semibold">Scope:</span>
+                {metadata}
+              </p>
+            )}
             <p className="origin-item">
               <span className="font-semibold">Author:</span>
-              {props.author}
+              {props.author || "Unknown"}
             </p>
             <p className="origin-item">
               <span className="font-semibold">Published At:</span>

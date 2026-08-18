@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import EverythingCard from "./EverythingCard";
 import Loader from "./Loader";
+import { fetchNews } from "../newsApi";
 
 function AllNews() {
   const [data, setData] = useState([]);
@@ -23,11 +24,7 @@ function AllNews() {
     setIsLoading(true);
     setError(null);
 
-    fetch(`https://news-aggregator-dusky.vercel.app/all-news?page=${page}&pageSize=${pageSize}`)
-      .then((response) => {
-        if (!response.ok) throw new Error("Network response was not ok");
-        return response.json();
-      })
+    fetchNews(`/api/news?query=world&page=${page}&pageSize=${pageSize}`)
       .then((myJson) => {
         if (myJson.success) {
           setTotalResults(myJson.data.totalResults || 0);
@@ -38,7 +35,7 @@ function AllNews() {
       })
       .catch((error) => {
         console.error("Fetch error:", error);
-        setError("Failed to fetch news. Please try again later.");
+        setError(error.message || "Failed to fetch news. Please try again later.");
       })
       .finally(() => {
         setIsLoading(false);
@@ -59,11 +56,13 @@ function AllNews() {
                 key={index}
                 title={element.title}
                 description={element.description}
-                imgUrl={element.urlToImage}
+                imgUrl={element.imageUrl}
                 publishedAt={element.publishedAt}
                 url={element.url}
                 author={element.author}
-                source={element.source.name}
+                source={element.sourceName}
+                country={element.country}
+                category={element.category}
               />
             ))
           ) : (
