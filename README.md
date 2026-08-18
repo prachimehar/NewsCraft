@@ -1,5 +1,4 @@
-# 📰 NewsCraft
-Personalized News Aggregator — Live Demo : https://news-craft-git-main-prachi-mehars-projects.vercel.app
+# 📰 NewsCraft : Personalized News Aggregator 
 
 NewsCraft is a sleek, real-time news aggregator web app that curates top headlines and breaking stories from around the world. It allows users to filter news by category and country, jot down personal notes, toggle between light and dark themes, and even engage with interactive puzzles.
 
