@@ -13,35 +13,71 @@ function TopHeadlines() {
   const [error, setError] = useState(null);
 
   function handlePrev() {
-    setPage(page - 1);
-  }
+  setPage(prev => prev - 1);
+}
 
-  function handleNext() {
-    setPage(page + 1);
-  }
+function handleNext() {
+  setPage(prev => prev + 1);
+}
 
   let pageSize = 6;
 
   useEffect(() => {
+<<<<<<< HEAD
     setIsLoading(true);
     setError(null);
     const categoryParam = params.category ? `&category=${params.category}` : "";
     fetchNews(`/api/news?country=in${categoryParam}&page=${page}&pageSize=${pageSize}`)
       .then((json) => {
-        if (json.success) {
-          setTotalResults(json.data.totalResults);
-          setData(json.data.articles);
-        } else {
-          setError(json.message || 'An error occurred');
+=======
+    setPage(1);
+  }, [params.category]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setIsLoading(true);
+        setError(null);
+
+        const categoryParam = params.category
+          ? `&category=${params.category}`
+          : "";
+
+        const response = await fetch(
+          `https://news-aggregator-dusky.vercel.app/top-headlines?language=en${categoryParam}&page=${page}&pageSize=${pageSize}`
+        );
+
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
         }
+
+        const json = await response.json();
+
+>>>>>>> 32fefe5427c3c3bf2929646c739f8a66a9792e07
+        if (json.success) {
+          setTotalResults(json.data.totalResults || 0);
+          setData(json.data.articles || []);
+        } else {
+          setError(json.message || "An error occurred");
+        }
+<<<<<<< HEAD
       })
       .catch((error) => {
         console.error('Fetch error:', error);
         setError(error.message || 'Failed to fetch news. Please try again later.');
       })
       .finally(() => {
+=======
+      } catch (err) {
+        console.error(err);
+        setError("Failed to fetch news. Please try again later.");
+      } finally {
+>>>>>>> 32fefe5427c3c3bf2929646c739f8a66a9792e07
         setIsLoading(false);
-      });
+      }
+    };
+
+    fetchData();
   }, [page, params.category]);
 
   return (

@@ -1,0 +1,214 @@
+warning: in the working copy of 'client/src/components/AllNews.jsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'client/src/components/CountryNews.jsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'client/src/components/EverythingCard.jsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'client/src/components/Notes.jsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'client/src/components/TopHeadlines.jsx', LF will be replaced by CRLF the next time Git touches it
+[1mdiff --git a/Server/.env b/Server/.env[m
+[1mdeleted file mode 100644[m
+[1mindex 3830949..0000000[m
+[1m--- a/Server/.env[m
+[1m+++ /dev/null[m
+[36m@@ -1,4 +0,0 @@[m
+[31m-API_Key = ea4695676a654c808fd65b97a7244184[m
+[31m-MONGO_URI=mongodb+srv://Prachimehar:IONV9lBKHhzRAHB4@cluster0.mrwqyeb.mongodb.net/[m
+[31m-PORT=5000[m
+[31m-[m
+[1mdiff --git a/Server/models/Note.js b/Server/models/Note.js[m
+[1mdeleted file mode 100644[m
+[1mindex a225469..0000000[m
+[1m--- a/Server/models/Note.js[m
+[1m+++ /dev/null[m
+[36m@@ -1,11 +0,0 @@[m
+[31m-const mongoose = require("mongoose");[m
+[31m-[m
+[31m-const noteSchema = new mongoose.Schema({[m
+[31m-  title: { type: String, required: true },[m
+[31m-  content: { type: String, required: true },[m
+[31m-  date: { type: Date, default: Date.now }[m
+[31m-});[m
+[31m-[m
+[31m-const Note = mongoose.model("Note", noteSchema);[m
+[31m-[m
+[31m-module.exports = Note;[m
+[1mdiff --git a/Server/node_modules/.bin/mime b/Server/node_modules/.bin/mime[m
+[1mdeleted file mode 100644[m
+[1mindex 7751de3..0000000[m
+[1m--- a/Server/node_modules/.bin/mime[m
+[1m+++ /dev/null[m
+[36m@@ -1,16 +0,0 @@[m
+[31m-#!/bin/sh[m
+[31m-basedir=$(dirname "$(echo "$0" | sed -e 's,\\,/,g')")[m
+[31m-[m
+[31m-case `uname` in[m
+[31m-    *CYGWIN*|*MINGW*|*MSYS*)[m
+[31m-        if command -v cygpath > /dev/null 2>&1; then[m
+[31m-            basedir=`cygpath -w "$basedir"`[m
+[31m-        fi[m
+[31m-    ;;[m
+[31m-esac[m
+[31m-[m
+[31m-if [ -x "$basedir/node" ]; then[m
+[31m-  exec "$basedir/node"  "$basedir/../mime/cli.js" "$@"[m
+[31m-else [m
+[31m-  exec node  "$basedir/../mime/cli.js" "$@"[m
+[31m-fi[m
+[1mdiff --git a/Server/node_modules/.bin/mime.cmd b/Server/node_modules/.bin/mime.cmd[m
+[1mdeleted file mode 100644[m
+[1mindex 54491f1..0000000[m
+[1m--- a/Server/node_modules/.bin/mime.cmd[m
+[1m+++ /dev/null[m
+[36m@@ -1,17 +0,0 @@[m
+[31m-@ECHO off[m
+[31m-GOTO start[m
+[31m-:find_dp0[m
+[31m-SET dp0=%~dp0[m
+[31m-EXIT /b[m
+[31m-:start[m
+[31m-SETLOCAL[m
+[31m-CALL :find_dp0[m
+[31m-[m
+[31m-IF EXIST "%dp0%\node.exe" ([m
+[31m-  SET "_prog=%dp0%\node.exe"[m
+[31m-) ELSE ([m
+[31m-  SET "_prog=node"[m
+[31m-  SET PATHEXT=%PATHEXT:;.JS;=;%[m
+[31m-)[m
+[31m-[m
+[31m-endLocal & goto #_undefined_# 2>NUL || title %COMSPEC% & "%_prog%"  "%dp0%\..\mime\cli.js" %*[m
+[1mdiff --git a/Server/node_modules/.bin/mime.ps1 b/Server/node_modules/.bin/mime.ps1[m
+[1mdeleted file mode 100644[m
+[1mindex 2222f40..0000000[m
+[1m--- a/Server/node_modules/.bin/mime.ps1[m
+[1m+++ /dev/null[m
+[36m@@ -1,28 +0,0 @@[m
+[31m-#!/usr/bin/env pwsh[m
+[31m-$basedir=Split-Path $MyInvocation.MyCommand.Definition -Parent[m
+[31m-[m
+[31m-$exe=""[m
+[31m-if ($PSVersionTable.PSVersion -lt "6.0" -or $IsWindows) {[m
+[31m-  # Fix case when both the Windows and Linux builds of Node[m
+[31m-  # are installed in the same directory[m
+[31m-  $exe=".exe"[m
+[31m-}[m
+[31m-$ret=0[m
+[31m-if (Test-Path "$basedir/node$exe") {[m
+[31m-  # Support pipeline input[m
+[31m-  if ($MyInvocation.ExpectingInput) {[m
+[31m-    $input | & "$basedir/node$exe"  "$basedir/../mime/cli.js" $args[m
+[31m-  } else {[m
+[31m-    & "$basedir/node$exe"  "$basedir/../mime/cli.js" $args[m
+[31m-  }[m
+[31m-  $ret=$LASTEXITCODE[m
+[31m-} else {[m
+[31m-  # Support pipeline input[m
+[31m-  if ($MyInvocation.ExpectingInput) {[m
+[31m-    $input | & "node$exe"  "$basedir/../mime/cli.js" $args[m
+[31m-  } else {[m
+[31m-    & "node$exe"  "$basedir/../mime/cli.js" $args[m
+[31m-  }[m
+[31m-  $ret=$LASTEXITCODE[m
+[31m-}[m
+[31m-exit $ret[m
+[1mdiff --git a/Server/node_modules/.bin/openai b/Server/node_modules/.bin/openai[m
+[1mdeleted file mode 100644[m
+[1mindex 1d3f518..0000000[m
+[1m--- a/Server/node_modules/.bin/openai[m
+[1m+++ /dev/null[m
+[36m@@ -1,16 +0,0 @@[m
+[31m-#!/bin/sh[m
+[31m-basedir=$(dirname "$(echo "$0" | sed -e 's,\\,/,g')")[m
+[31m-[m
+[31m-case `uname` in[m
+[31m-    *CYGWIN*|*MINGW*|*MSYS*)[m
+[31m-        if command -v cygpath > /dev/null 2>&1; then[m
+[31m-            basedir=`cygpath -w "$basedir"`[m
+[31m-        fi[m
+[31m-    ;;[m
+[31m-esac[m
+[31m-[m
+[31m-if [ -x "$basedir/node" ]; then[m
+[31m-  exec "$basedir/node"  "$basedir/../openai/bin/cli" "$@"[m
+[31m-else [m
+[31m-  exec node  "$basedir/../openai/bin/cli" "$@"[m
+[31m-fi[m
+[1mdiff --git a/Server/node_modules/.bin/openai.cmd b/Server/node_modules/.bin/openai.cmd[m
+[1mdeleted file mode 100644[m
+[1mindex 422e1fc..0000000[m
+[1m--- a/Server/node_modules/.bin/openai.cmd[m
+[1m+++ /dev/null[m
+[36m@@ -1,17 +0,0 @@[m
+[31m-@ECHO off[m
+[31m-GOTO start[m
+[31m-:find_dp0[m
+[31m-SET dp0=%~dp0[m
+[31m-EXIT /b[m
+[31m-:start[m
+[31m-SETLOCAL[m
+[31m-CALL :find_dp0[m
+[31m-[m
+[31m-IF EXIST "%dp0%\node.exe" ([m
+[31m-  SET "_prog=%dp0%\node.exe"[m
+[31m-) ELSE ([m
+[31m-  SET "_prog=node"[m
+[31m-  SET PATHEXT=%PATHEXT:;.JS;=;%[m
+[31m-)[m
+[31m-[m
+[31m-endLocal & goto #_undefined_# 2>NUL || title %COMSPEC% & "%_prog%"  "%dp0%\..\openai\bin\cli" %*[m
+[1mdiff --git a/Server/node_modules/.bin/openai.ps1 b/Server/node_modules/.bin/openai.ps1[m
+[1mdeleted file mode 100644[m
+[1mindex 97f78d6..0000000[m
+[1m--- a/Server/node_modules/.bin/openai.ps1[m
+[1m+++ /dev/null[m
+[36m@@ -1,28 +0,0 @@[m
+[31m-#!/usr/bin/env pwsh[m
+[31m-$basedir=Split-Path $MyInvocation.MyCommand.Definition -Parent[m
+[31m-[m
+[31m-$exe=""[m
+[31m-if ($PSVersionTable.PSVersion -lt "6.0" -or $IsWindows) {[m
+[31m-  # Fix case when both the Windows and Linux builds of Node[m
+[31m-  # are installed in the same directory[m
+[31m-  $exe=".exe"[m
+[31m-}[m
+[31m-$ret=0[m
+[31m-if (Test-Path "$basedir/node$exe") {[m
+[31m-  # Support pipeline input[m
+[31m-  if ($MyInvocation.ExpectingInput) {[m
+[31m-    $input | & "$basedir/node$exe"  "$basedir/../openai/bin/cli" $args[m
+[31m-  } else {[m
+[31m-    & "$basedir/node$exe"  "$basedir/../openai/bin/cli" $args[m
+[31m-  }[m
+[31m-  $ret=$LASTEXITCODE[m
+[31m-} else {[m
+[31m-  # Support pipeline input[m
+[31m-  if ($MyInvocation.ExpectingInput) {[m
+[31m-    $input | & "node$exe"  "$basedir/../openai/bin/cli" $args[m
+[31m-  } else {[m
+[31m-    & "node$exe"  "$basedir/../openai/bin/cli" $args[m
+[31m-  }[m
+[31m-  $ret=$LASTEXITCODE[m
+[31m-}[m
+[31m-exit $ret[m
+[1mdiff --git a/Server/node_modules/.package-lock.json b/Server/node_modules/.package-lock.json[m
+[1mdeleted file mode 100644[m
+[1mindex 834a494..0000000[m
+[1m--- a/Server/node_modules/.package-lock.json[m
+[1m+++ /dev/null[m
+[36m@@ -1,1361 +0,0 @@[m
+[31m-{[m
+[31m-  "name": "server",[m
+[31m-  "version": "1.0.0",[m
+[31m-  "lockfileVersion": 3,[m
+[31m-  "requires": true,[m
+[31m-  "packages": {[m
+[31m-    "node_modules/@mongodb-js/saslprep": {[m
+[31m-      "version": "1.2.1",[m
+[31m-      "resolved": "https://registry.npmjs.org/@mongodb-js/saslprep/-/saslprep-1.2.1.tgz",[m
+[31m-      "integrity": "sha512-1NCa8GsZ+OFLTw5KkKQS22wLS+Rs+y02sgkhr99Pm4OSXtSDHCJyq0uscPF0qA86ipGYH4PwtC2+a8Y4RKkCcg==",[m
+[31m-      "dependencies": {[m
+[31m-        "sparse-bitfield": "^3.0.3"[m
+[31m-      }[m
+[31m-    },[m
+[31m-    "node_modules/@types/node": {[m
+[31m-      "version": "18.19.86",[m
+[31m-      "resolved": "https://registry.npmjs.org/@types/node/-/node-18.19.86.tgz",[m
+[31m-      "integrity": "sha512-fifKayi175wLyKyc5qUfyENhQ1dCNI1UNjp653d8kuYcPQN5JhX3dGuP/XmvPTg/xRBn1VTLpbmi+H/Mr7tLfQ==",[m
