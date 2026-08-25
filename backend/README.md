@@ -1,28 +1,31 @@
-# NewsCraft Spring Boot Backend
+# NewsCraft Backend
 
-This backend replaces the old Node/Express NewsAPI pass-through with a Spring Boot API that normalizes article data before React receives it.
+Spring Boot API for NewsCraft. It normalizes NewsAPI.org responses, handles authentication, protects user notes with JWT, and reads production configuration from environment variables.
 
-## NewsAPI Endpoint Use
+## Endpoints
 
-- `/v2/top-headlines` is used for country/category headlines. NewsCraft passes `country`, `category`, `page`, `pageSize`, and optional `q`.
-- `/v2/everything` is used for free-text search when no country or category is requested.
-- `/v2/top-headlines/sources` is not called for every article. NewsAPI article payloads already include the source name, and country/category in NewsCraft come from the request context. Calling source metadata per article would create an external N+1 API pattern.
+- `GET /` backend status
+- `GET /health` health check
+- `POST /api/auth/register`
+- `POST /api/auth/login`
+- `GET /api/news`
+- `GET /all-news`
+- `GET /top-headlines`
+- `GET /country/{iso}`
+- `/notes/**` requires a valid bearer token
 
-## Default Behavior
-
-If no country is provided for `/api/news`, NewsCraft defaults to India (`in`). This avoids the previous ambiguous behavior where top headlines could appear UK-heavy without the frontend explicitly requesting `gb`.
-
-## Environment
-
-Required:
+## Required Environment
 
 - `NEWS_API_KEY`
-- `FRONTEND_URL`
+- `MONGODB_URI`
+- `JWT_SECRET`
 
-Optional:
+## Optional Environment
 
-- `DB_URL` (include the database name, for example `mongodb+srv://username:password@cluster.example.mongodb.net/newsCraft`)
-- `DB_USERNAME`
-- `DB_PASSWORD`
+- `PORT`
+- `CORS_ALLOWED_ORIGINS`
+- `JWT_EXPIRATION`
 - `NEWS_API_BASE_URL`
 - `NEWS_API_TIMEOUT`
+
+Keep real values in local or platform environment variables only. Do not commit `.env` files.

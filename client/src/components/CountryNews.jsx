@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import  { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import EverythingCard from "./EverythingCard";
 import Loader from "./Loader";
@@ -64,7 +64,10 @@ function CountryNews() {
                 />
             ))
           ) : (
-            <p>No news articles found for this criteria.</p>
+            <p className="text-center text-gray-600">
+              No headlines are available for this country/category right now.
+              Try a different country or category.
+            </p>
           )
         ) : (
           <Loader />

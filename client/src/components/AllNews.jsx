@@ -76,7 +76,7 @@ function AllNews() {
           <button disabled={page <= 1} className="pagination-btn text-center" onClick={handlePrev}>
             &larr; Prev
           </button>
-          <p className="font-semibold opacity-80">
+          <p className="font-semibold text-[#000000] opacity-80">
             {page} of {Math.max(1, Math.ceil(totalResults / pageSize))}
           </p>
           <button

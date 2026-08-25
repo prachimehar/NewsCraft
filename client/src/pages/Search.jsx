@@ -1,5 +1,3 @@
-import React from 'react'
-
 function Search() {
   return (
     <form className='search-bar my-8 text-center px-2 xs:mb-10 md:mb-16'>

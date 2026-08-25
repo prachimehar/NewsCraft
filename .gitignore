@@ -1,12 +1,13 @@
 .env
 .env.*
 !.env.example
-
-**/application.yml
+backend/env
 
 node_modules/
 dist/
 target/
+build/
+coverage/
 
 *.log
 .idea/

@@ -1,52 +1,48 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import countries from "./countries";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleArrowDown } from "@fortawesome/free-solid-svg-icons";
-import newsIcon from "../assets/newspapers.png"; // Adjusted path if needed
-import { useLocation } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import newsIcon from "../assets/newspapers.png";
+import { useAuth } from "../auth.jsx";
 
 function Header() {
   const [active, setActive] = useState(false);
-  const [showCountryDropdown, setShowCountryDropdown] = useState(false);
-  const [showCategoryDropdown, setShowCategoryDropdown] = useState(false);
+  const [profileOpen, setProfileOpen] = useState(false);
+  const profileRef = useRef(null);
   const location = useLocation();
-
-  const [theme, setTheme] = useState(
-    localStorage.getItem("theme") || "dark-theme"
-  );
+  const navigate = useNavigate();
+  const { user, logout } = useAuth();
 
   useEffect(() => {
-    document.body.className = theme; 
-    localStorage.setItem("theme", theme); 
-  }, [theme]);
+    setActive(false);
+    setProfileOpen(false);
+  }, [location.pathname]);
 
   useEffect(() => {
-  setActive(false);
-  setShowCategoryDropdown(false);
-  setShowCountryDropdown(false);
-}, [location.pathname]);
+    function handleClickOutside(event) {
+      if (profileRef.current && !profileRef.current.contains(event.target)) {
+        setProfileOpen(false);
+      }
+    }
 
-  function toggleTheme() {
-    setTheme(theme === "light-theme" ? "dark-theme" : "light-theme");
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  function handleLogout() {
+    logout();
+    setProfileOpen(false);
+    setActive(false);
+    navigate("/home");
   }
 
-  let category = [
-    "business",
-    "entertainment",
-    "general",
-    "health",
-    "science",
-    "sports",
-    "technology",
-  ];
+  const displayName = user?.name || user?.email || "Profile";
+  const profileInitial = displayName.charAt(0).toUpperCase();
 
   return (
     <header>
-      <nav className="sticky top-0 left-0 w-full z-10 flex items-center justify-around py-7 px-5">
+      <nav className="sticky top-0 left-0 w-full z-10 flex items-center justify-between py-7 px-5 md:px-10">
         <h3 className="text-2xl font-bold">
           <Link
-            to="/Home"
+            to="/home"
             className="flex items-center gap-2 no-underline text-white"
           >
             <img src={newsIcon} alt="News Icon" className="w-9 h-9" />
@@ -54,7 +50,11 @@ function Header() {
           </Link>
         </h3>
 
-        <ul className={`nav-ul ${active ? "active" : ""}`}>
+        <ul
+          className={`nav-ul flex items-center gap-8 md:gap-10 ${
+            active ? "active" : ""
+          }`}
+        >
           <li>
             <Link
               className="no-underline font-semibold text-white whitespace-nowrap"
@@ -73,112 +73,50 @@ function Header() {
               All News
             </Link>
           </li>
-
-          <li className="dropdown-li relative">
-            <button
-              className="no-underline font-semibold flex items-center gap-2 text-white whitespace-nowrap"
-              onClick={() => {
-                setShowCategoryDropdown(!showCategoryDropdown);
-                setShowCountryDropdown(false);
-              }}
-            >
-              Top-Headlines{" "}
-              <FontAwesomeIcon
-                className={`down-arrow-icon ${
-                  showCategoryDropdown ? "down-arrow-icon-active" : ""
-                }`}
-                icon={faCircleArrowDown}
-              />
-            </button>
-            <ul
-              className={`dropdown p-2 absolute left-0 top-full rounded-md ${
-                showCategoryDropdown ? "show-dropdown" : "hidden"
-              }`}
-            >
-              {category.map((element, index) => (
-                <li key={index} onClick={() => setShowCategoryDropdown(false)}>
-                  <Link
-                    to={`/top-headlines/${element}`}
-                    className="flex items-center gap-3 capitalize text-white px-3 py-1"
-                    onClick={() => setActive(false)}
-                  >
-                    {element}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+          <li className="relative" ref={profileRef}>
+            {user ? (
+              <>
+                <button
+                  className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-600 font-bold text-white shadow-md"
+                  aria-label="Open profile menu"
+                  aria-expanded={profileOpen}
+                  onClick={() => setProfileOpen((open) => !open)}
+                >
+                  {profileInitial}
+                </button>
+                {profileOpen && (
+                  <div className="absolute right-0 top-12 w-56 rounded-md border border-slate-200 bg-white py-2 text-slate-900 shadow-xl">
+                    <div className="border-b border-slate-200 px-4 py-2">
+                      <p className="truncate font-semibold text-slate-900">
+                        {user.name || "Signed in"}
+                      </p>
+                      {user.email && (
+                        <p className="truncate text-sm text-slate-600">
+                          {user.email}
+                        </p>
+                      )}
+                    </div>
+                    <button
+                      className="w-full px-4 py-2 text-left font-semibold text-slate-900 hover:bg-slate-100"
+                      onClick={handleLogout}
+                    >
+                      Logout
+                    </button>
+                  </div>
+                )}
+              </>
+            ) : (
+              <Link
+                to="/login"
+                className="text-white whitespace-nowrap"
+                onClick={() => setActive(false)}
+              >
+                Login
+              </Link>
+            )}
           </li>
-
-          <li className="dropdown-li relative">
-            <button
-              className="no-underline font-semibold flex items-center gap-2 text-white whitespace-nowrap"
-              onClick={() => {
-                setShowCountryDropdown(!showCountryDropdown);
-                setShowCategoryDropdown(false);
-              }}
-            >
-              Country{" "}
-              <FontAwesomeIcon
-                className={`down-arrow-icon ${
-                  showCountryDropdown ? "down-arrow-icon-active" : ""
-                }`}
-                icon={faCircleArrowDown}
-              />
-            </button>
-            <ul
-              className={`dropdown p-2 absolute left-0 top-full rounded-md ${
-                showCountryDropdown ? "show-dropdown" : "hidden"
-              }`}
-            >
-              {countries.map((element, index) => (
-                <li key={index} onClick={() => setShowCountryDropdown(false)}>
-                  <Link
-                    to={`/country/${element?.iso_2_alpha}`}
-                    className="flex items-center gap-3 text-white px-3 py-1"
-                    onClick={() => setActive(false)}
-                  >
-                    <img
-                      src={element?.png}
-                      srcSet={`https://flagcdn.com/32x24/${element?.iso_2_alpha}.png 2x`}
-                      alt={element?.countryName}
-                      className="w-5 h-4"
-                    />
-                    <span>{element?.countryName}</span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </li>
-
-          <li>
-            <Link
-              to="/puzzle"
-              className="text-white whitespace-nowrap"
-              onClick={() => setActive(false)}
-            >
-              Puzzle
-            </Link>
-          </li>
-          <li>
-            <Link
-              to="/notes"
-              className="text-white whitespace-nowrap"
-              onClick={() => setActive(false)}
-            >
-              Notes
-            </Link>
-          </li>
-
-          {/* Theme Toggle */}
-          <button
-          onClick={toggleTheme}
-          className="p-2 bg-gray-200 dark:bg-gray-800 text-black dark:text-white rounded-full"
-        >
-          {theme === "light-theme" ? "🌙" : "☀"}
-        </button>
         </ul>
 
-        {/* Hamburger Menu */}
         <div
           className={active ? "ham-burger ham-open" : "ham-burger"}
           onClick={() => setActive(!active)}

@@ -1,0 +1,31 @@
+services:
+  backend:
+    build:
+      context: ./backend
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
+    environment:
+      PORT: 8080
+      MONGODB_URI: ${MONGODB_URI}
+      NEWS_API_KEY: ${NEWS_API_KEY}
+      NEWS_API_BASE_URL: ${NEWS_API_BASE_URL:-https://newsapi.org}
+      NEWS_API_TIMEOUT: ${NEWS_API_TIMEOUT:-5s}
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_EXPIRATION: ${JWT_EXPIRATION:-86400000}
+      CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS:-http://localhost:3000}
+    ports:
+      - "8080:8080"
+
+  frontend:
+    build:
+      context: ./client
+      args:
+        VITE_API_BASE_URL: ${VITE_API_BASE_URL}
+    environment:
+      BACKEND_URL: http://backend:8080
+      VITE_API_BASE_URL: ${VITE_API_BASE_URL}
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend

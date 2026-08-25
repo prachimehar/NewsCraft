@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import  { useState, useEffect } from "react";
 import { useParams } from 'react-router-dom'
 import EverythingCard from './EverythingCard'
 import Loader from "./Loader";
@@ -13,23 +13,16 @@ function TopHeadlines() {
   const [error, setError] = useState(null);
 
   function handlePrev() {
-  setPage(prev => prev - 1);
-}
+    setPage(prev => prev - 1);
+  }
 
-function handleNext() {
-  setPage(prev => prev + 1);
-}
+  function handleNext() {
+    setPage(prev => prev + 1);
+  }
 
-  let pageSize = 6;
+  const pageSize = 6;
 
   useEffect(() => {
-<<<<<<< HEAD
-    setIsLoading(true);
-    setError(null);
-    const categoryParam = params.category ? `&category=${params.category}` : "";
-    fetchNews(`/api/news?country=in${categoryParam}&page=${page}&pageSize=${pageSize}`)
-      .then((json) => {
-=======
     setPage(1);
   }, [params.category]);
 
@@ -39,40 +32,22 @@ function handleNext() {
         setIsLoading(true);
         setError(null);
 
-        const categoryParam = params.category
-          ? `&category=${params.category}`
-          : "";
+        const categoryParam = params.category ? `&category=${params.category}` : "";
 
-        const response = await fetch(
-          `https://news-aggregator-dusky.vercel.app/top-headlines?language=en${categoryParam}&page=${page}&pageSize=${pageSize}`
+        const json = await fetchNews(
+          `/api/news?country=in${categoryParam}&page=${page}&pageSize=${pageSize}`
         );
 
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-
-        const json = await response.json();
-
->>>>>>> 32fefe5427c3c3bf2929646c739f8a66a9792e07
         if (json.success) {
           setTotalResults(json.data.totalResults || 0);
           setData(json.data.articles || []);
         } else {
           setError(json.message || "An error occurred");
         }
-<<<<<<< HEAD
-      })
-      .catch((error) => {
-        console.error('Fetch error:', error);
-        setError(error.message || 'Failed to fetch news. Please try again later.');
-      })
-      .finally(() => {
-=======
       } catch (err) {
         console.error(err);
-        setError("Failed to fetch news. Please try again later.");
+        setError(err.message || "Failed to fetch news. Please try again later.");
       } finally {
->>>>>>> 32fefe5427c3c3bf2929646c739f8a66a9792e07
         setIsLoading(false);
       }
     };
@@ -101,7 +76,10 @@ function handleNext() {
               />
             ))
           ) : (
-            <p>No articles found for this category or criteria.</p>
+            <p className="text-center text-gray-600">
+              No headlines are available for this country/category right now.
+              Try a different country or category.
+            </p>
           )
         ) : (
           <Loader />

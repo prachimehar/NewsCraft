@@ -11,4 +11,9 @@ public class StatusController {
     public Map<String, String> status() {
         return Map.of("message", "NewsCraft backend is live");
     }
+
+    @GetMapping("/health")
+    public Map<String, String> health() {
+        return Map.of("status", "ok");
+    }
 }
