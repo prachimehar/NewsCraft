@@ -1,41 +1,417 @@
-<<<<<<< HEAD
-# 📰 NewsCraft : Personalized News Aggregator 
-=======
+# 📰 NewsCraft — Personalized News Aggregator
 
-NewsCraft is a full-stack newspaper-style news application with global news browsing, category and country filters, JWT authentication, personal notes, and a puzzle section.
+**NewsCraft** is a full-stack, newspaper-style news aggregation platform that allows users to discover and explore news from around the world with **country and category-based filtering**, while also providing **secure user authentication, personal notes, and interactive features**.
 
-## Features
+The application is built with a modern **React frontend** and **Spring Boot backend**, uses **MongoDB Atlas** for persistence, integrates with **NewsAPI**, and is containerized using **Docker and Docker Compose**.
 
-- Global and country-specific news feeds backed by NewsAPI.org
-- Top headlines by category
-- Register, login, logout, and JWT-protected notes
-- User-owned notes so one user cannot access another user's notes
-- Editorial cream, dark navy, and NewsCraft red visual identity
-- Vercel-ready frontend and Render-ready backend
-- Docker Compose setup for local production-style testing
+## 🌐 Live Demo
 
-## Tech Stack
+🚀 **[NewsCraft — Live Application](https://news-craft-sigma.vercel.app/)**
 
-- Frontend: React, Vite, Tailwind CSS, Axios, React Router
-- Backend: Java 21, Spring Boot, Spring Security, JWT, Spring Data MongoDB
-- Database: MongoDB Atlas
-- Deployment: Vercel for frontend, Render for backend
-- Local containers: Docker, Docker Compose, Nginx
+**Frontend:** Vercel
+**Backend:** Render
+**Database:** MongoDB Atlas
 
-## Project Structure
+---
+
+## ✨ Features
+
+### 📰 News Aggregation
+
+* Browse breaking and global news.
+* Search news by keywords.
+* Filter news by:
+
+  * Country
+  * Category
+  * Topic
+* Pagination for news results.
+* Top-headlines support.
+* Country-specific news feeds.
+* NewsAPI integration through the Spring Boot backend.
+* Source-aware fallback strategy for countries where direct NewsAPI country queries may return limited results.
+* Cached news-source discovery to reduce unnecessary API calls.
+
+### 🔐 Authentication & Security
+
+* User registration and login.
+* JWT-based authentication.
+* Password hashing using BCrypt.
+* Spring Security integration.
+* Protected user-specific APIs.
+* Secure logout flow.
+* Authenticated users can access their own personal data.
+
+### 📝 Personal Notes
+
+* Create personal notes.
+* View user-owned notes.
+* Update and delete notes.
+* Notes are associated with authenticated users.
+* Users cannot access another user's notes.
+
+### 🧩 Interactive Features
+
+* Puzzle/interactive section.
+* Responsive newspaper-style interface.
+* Category and country navigation.
+* User profile/authentication experience.
+
+### 🎨 UI / UX
+
+* Responsive design.
+* Modern newspaper-inspired interface.
+* Tailwind CSS styling.
+* Clean editorial layout.
+* Desktop and mobile-friendly experience.
+* React Router based navigation.
+
+---
+
+# 🏗️ System Architecture
 
 ```text
-client/   React + Vite frontend
-backend/  Spring Boot backend
-docker-compose.yml
+                    ┌─────────────────────────┐
+                    │        User             │
+                    └────────────┬────────────┘
+                                 │
+                                 ▼
+                    ┌─────────────────────────┐
+                    │   React + Vite Frontend │
+                    │      Tailwind CSS       │
+                    └────────────┬────────────┘
+                                 │
+                          REST API / JWT
+                                 │
+                                 ▼
+                    ┌─────────────────────────┐
+                    │   Spring Boot Backend   │
+                    │                         │
+                    │  Controllers            │
+                    │  Services               │
+                    │  Spring Security        │
+                    │  JWT Authentication     │
+                    └───────┬─────────┬───────┘
+                            │         │
+                  ┌─────────┘         └──────────┐
+                  ▼                              ▼
+        ┌──────────────────┐           ┌──────────────────┐
+        │   MongoDB Atlas  │           │     NewsAPI      │
+        │                  │           │                  │
+        │ Users / Notes    │           │ News Sources     │
+        └──────────────────┘           └──────────────────┘
+```
+
+---
+
+# 🛠️ Tech Stack
+
+## Frontend
+
+* **React.js**
+* **Vite**
+* **Tailwind CSS**
+* **Axios**
+* **React Router**
+* JavaScript / ES6+
+
+## Backend
+
+* **Java 21**
+* **Spring Boot**
+* **Spring MVC**
+* **Spring Security**
+* **JWT Authentication**
+* **Spring Data MongoDB**
+* **Maven**
+* REST APIs
+
+## Database
+
+* **MongoDB**
+* **MongoDB Atlas**
+
+## APIs & Security
+
+* **NewsAPI**
+* JWT
+* BCrypt
+* CORS
+* RESTful APIs
+
+## DevOps & Deployment
+
+* **Docker**
+* **Docker Compose**
+* **Nginx**
+* **Vercel**
+* **Render**
+* Git / GitHub
+
+---
+
+# 📂 Project Structure
+
+```text
+NewsCraft/
+│
+├── backend/
+│   ├── src/
+│   │   └── main/
+│   │       ├── java/
+│   │       │   └── com/
+│   │       │       └── newscraft/
+│   │       │           ├── controller/
+│   │       │           ├── service/
+│   │       │           ├── repository/
+│   │       │           ├── model/
+│   │       │           ├── dto/
+│   │       │           ├── security/
+│   │       │           └── config/
+│   │       │
+│   │       └── resources/
+│   │           └── application.yml
+│   │
+│   ├── Dockerfile
+│   ├── .dockerignore
+│   └── pom.xml
+│
+├── client/
+│   ├── src/
+│   │   ├── components/
+│   │   ├── pages/
+│   │   ├── assets/
+│   │   ├── auth/
+│   │   └── ...
+│   │
+│   ├── Dockerfile
+│   ├── nginx.conf
+│   ├── vercel.json
+│   └── package.json
+│
+├── docker-compose.yml
+├── .env.example
+└── README.md
+```
+
+---
+
+# 🔌 Important API Endpoints
+
+### News
+
+```http
+GET /api/news
+```
+
+Example:
+
+```http
+GET /api/news?query=world&page=1&pageSize=12
+```
+
+### All News
+
+```http
+GET /all-news
+```
+
+### Top Headlines
+
+```http
+GET /top-headlines
+```
+
+### Country News
+
+```http
+GET /country/{iso}
+```
+
+### Authentication
+
+```http
+POST /auth/register
+POST /auth/login
+```
+
+### Health Check
+
+```http
+GET /health
+```
+
+> Endpoint names may vary depending on the current backend controller configuration.
+
+---
+
+# 📰 NewsAPI Integration
+
+NewsCraft uses **NewsAPI** as the external news provider.
+
+The backend does not simply expose the external API directly to the frontend. Instead, the Spring Boot backend handles news retrieval and provides a controlled API for the React application.
+
+A source-aware fallback strategy was implemented to handle cases where a direct country-based NewsAPI request may return no articles.
+
+The flow is approximately:
+
+```text
+Frontend
+   │
+   ▼
+Spring Boot /api/news
+   │
+   ▼
+Try country/category query
+   │
+   ├── Articles found ──────► Return results
+   │
+   └── No articles
+           │
+           ▼
+     Discover available sources
+           │
+           ▼
+     Request news using sources
+           │
+           ▼
+       Return results
+```
+
+A cache is used for source discovery to reduce repeated external API requests.
+
+---
+
+# 🔐 Authentication Flow
+
+NewsCraft uses **JWT-based authentication with Spring Security**.
+
+```text
+User
+ │
+ ▼
+Login
+ │
+ ▼
+Spring Security
+ │
+ ▼
+Credentials Validation
+ │
+ ▼
+JWT Generated
+ │
+ ▼
+Frontend stores authentication state
+ │
+ ▼
+JWT sent with protected requests
+ │
+ ▼
+JWT Authentication Filter
+ │
+ ▼
+Protected Controller
+```
+
+Passwords are never stored as plain text. They are securely hashed using **BCrypt**.
+
+---
+
+# 🐳 Docker Setup
+
+NewsCraft is containerized for production-style local development.
+
+Docker Compose runs the frontend and backend as separate services.
+
+```text
+                 Docker Compose
+                       │
+          ┌────────────┴────────────┐
+          │                         │
+          ▼                         ▼
+ ┌─────────────────┐       ┌─────────────────┐
+ │ Frontend        │       │ Backend         │
+ │ React + Vite    │       │ Spring Boot     │
+ │ Nginx           │       │ Java 21         │
+ └─────────────────┘       └────────┬────────┘
+                                    │
+                                    ▼
+                              MongoDB Atlas
+```
+
+MongoDB is not run as a Docker container. The application connects to MongoDB Atlas through `MONGODB_URI`.
+
+### Build containers
+
+```bash
+docker compose build
+```
+
+### Start application
+
+```bash
+docker compose up
+```
+
+Then open:
+
+```text
+http://localhost:3000
+```
+
+### Stop containers
+
+```bash
+docker compose down
+```
+
+---
+
+# 🚀 Local Development
+
+## 1. Clone the repository
+
+```bash
+git clone https://github.com/prachimehar/NewsCraft.git
+cd NewsCraft
+```
+
+## 2. Configure environment variables
+
+Create your environment configuration from:
+
+```text
 .env.example
 ```
 
-## Local Development
+Never commit real secrets such as:
 
-Create environment files from `.env.example` and fill in real values locally. Do not commit real `.env` files.
+* MongoDB credentials
+* JWT secrets
+* NewsAPI keys
 
-Frontend:
+---
+
+## 3. Start Backend
+
+```bash
+cd backend
+mvn clean install
+mvn spring-boot:run
+```
+
+Backend runs on:
+
+```text
+http://localhost:8080
+```
+
+---
+
+## 4. Start Frontend
+
+Open another terminal:
 
 ```bash
 cd client
@@ -43,61 +419,187 @@ npm install
 npm run dev
 ```
 
-Backend:
+Frontend runs on:
 
-```bash
-cd backend
-mvn spring-boot:run
+```text
+http://localhost:5173
 ```
 
-MongoDB:
+---
 
-- Use MongoDB Atlas or another MongoDB URI through `MONGODB_URI`.
-- Include the database name in the URI.
+# ⚙️ Environment Variables
 
-## Docker Setup
+## Backend
 
-Docker Compose runs the React production build through Nginx and proxies API requests to the backend container. It expects MongoDB Atlas through `MONGODB_URI`; it does not start a MongoDB container.
+```env
+MONGODB_URI=your_mongodb_connection_string
 
-```bash
-docker compose build
-docker compose up
+NEWS_API_KEY=your_newsapi_key
+NEWS_API_BASE_URL=https://newsapi.org
+NEWS_API_TIMEOUT=5s
+
+JWT_SECRET=your_jwt_secret
+JWT_EXPIRATION=86400000
+
+CORS_ALLOWED_ORIGINS=http://localhost:5173
+
+PORT=8080
 ```
 
-Open the frontend at `http://localhost:3000`.
+## Frontend
 
-## Production Deployment
+```env
+VITE_API_BASE_URL=http://localhost:8080
+```
 
-Vercel frontend:
+For production:
 
-- Set `VITE_API_BASE_URL` to the deployed Render backend URL.
-- `client/vercel.json` handles React Router refresh fallback.
+```env
+VITE_API_BASE_URL=https://newscraft.onrender.com
+```
 
-Render backend:
+> Never commit `.env` files containing real credentials.
 
-- Deploy the Spring Boot backend from `backend`.
-- Set Java 21.
-- Configure all required backend environment variables.
-- Use `/health` as a lightweight health endpoint.
+---
 
-MongoDB Atlas:
+# ☁️ Production Deployment
 
-- Set `MONGODB_URI` to the Atlas connection string.
-- Keep credentials in environment variables only.
+## Frontend — Vercel
 
-## Environment Variables
+The React frontend is deployed on Vercel.
 
-Backend:
+Production URL:
 
-- `NEWS_API_KEY`
-- `NEWS_API_BASE_URL`
-- `NEWS_API_TIMEOUT`
-- `MONGODB_URI`
-- `CORS_ALLOWED_ORIGINS`
-- `PORT`
-- `JWT_SECRET`
-- `JWT_EXPIRATION`
+**https://news-craft-sigma.vercel.app/**
 
-Frontend:
+Configure:
 
-- `VITE_API_BASE_URL`
+```env
+VITE_API_BASE_URL=https://newscraft.onrender.com
+```
+
+React Router fallback configuration is included for production navigation and refresh handling.
+
+---
+
+## Backend — Render
+
+The Spring Boot backend is deployed on Render using Docker.
+
+The backend:
+
+* Uses Java 21.
+* Builds through Maven inside Docker.
+* Runs using Eclipse Temurin JRE.
+* Binds to Render's `PORT` environment variable.
+* Uses MongoDB Atlas.
+* Exposes REST APIs.
+* Provides a health endpoint for deployment monitoring.
+
+Production backend:
+
+```text
+https://newscraft.onrender.com
+```
+
+---
+
+# 🗄️ MongoDB Atlas
+
+MongoDB Atlas is used as the production database.
+
+The application receives the MongoDB connection string through:
+
+```env
+MONGODB_URI
+```
+
+Example format:
+
+```text
+mongodb+srv://<username>:<password>@<cluster>/<database>
+```
+
+Credentials are stored only in environment variables and are not committed to GitHub.
+
+---
+
+# 🔒 Security Considerations
+
+NewsCraft follows several basic security practices:
+
+* JWT-based authentication.
+* BCrypt password hashing.
+* Protected backend endpoints.
+* User-specific data access.
+* CORS configuration.
+* Environment-based secrets.
+* No database credentials committed to source control.
+* No API keys hardcoded into the application.
+* JWT secret supplied through environment variables.
+
+---
+
+# 🧪 Testing the Production API
+
+After deployment, the backend API can be tested directly:
+
+```text
+https://newscraft.onrender.com/api/news?query=world&page=1&pageSize=12
+```
+
+A successful request should return a JSON news response rather than a `404 Not Found`.
+
+Health check:
+
+```text
+https://newscraft.onrender.com/health
+```
+
+---
+
+# 🔄 Deployment Workflow
+
+```text
+        GitHub
+           │
+     git push origin main
+           │
+     ┌─────┴─────┐
+     ▼           ▼
+  Vercel       Render
+     │           │
+     ▼           ▼
+ React Build   Docker Build
+     │           │
+     ▼           ▼
+Frontend      Spring Boot
+               │
+               ▼
+          MongoDB Atlas
+```
+
+---
+
+# 💡 Key Engineering Highlights
+
+Some of the main engineering concepts demonstrated in this project:
+
+* Full-stack application architecture.
+* REST API development with Spring Boot.
+* JWT authentication and Spring Security.
+* Role/user-aware data protection.
+* MongoDB database integration.
+* External API integration.
+* API fallback strategies.
+* Server-side API abstraction.
+* React component-based architecture.
+* Client-side routing.
+* Responsive UI development.
+* Docker containerization.
+* Docker Compose orchestration.
+* Nginx production serving.
+* Environment-based configuration.
+* Cloud deployment with Vercel and Render.
+* MongoDB Atlas cloud database.
+* Git/GitHub based deployment workflow.
