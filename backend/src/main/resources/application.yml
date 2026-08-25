@@ -12,7 +12,7 @@ spring:
       uri: ${MONGODB_URI}
 
 newscraft:
-  cors-allowed-origins: ${CORS_ALLOWED_ORIGINS:${FRONTEND_URL:http://localhost:5173}}
+  cors-allowed-origins: ${CORS_ALLOWED_ORIGINS:${FRONTEND_URL:https://news-craft-sigma.vercel.app,http://localhost:5173}}
   news-api:
     base-url: ${NEWS_API_BASE_URL:https://newsapi.org}
     api-key: ${NEWS_API_KEY:}
